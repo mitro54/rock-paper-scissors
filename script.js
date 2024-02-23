@@ -1,6 +1,23 @@
+let userWinCount = 0;
+let computerWinCount = 0;
+let drawIdentify = false;
+let playerPrompt = prompt();
+const playerSelection = playerPrompt.toLowerCase();
+
+
+// Validating user input
+function inputValidator(playerPrompt) {
+    if (playerPrompt === 'rock' || 'paper' || 'scissors') {
+        return playerSelection;
+    } else {
+        console.log('Cannot identify user input...');
+        return playerPrompt = prompt();
+    }
+};
+
 // Random computer output
 function getComputedChoice() {
-    let randomNumber = Math.floor(Math.random() * 99) + 1
+    let randomNumber = Math.floor(Math.random() * 99) + 1;
     if (randomNumber <= 33) {
         return 'rock';
     } else if (randomNumber > 33 && randomNumber <= 66) {
@@ -10,42 +27,63 @@ function getComputedChoice() {
     }
 };
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerInput, getComputedChoice) {
     // Draws
-    if (playerSelection === 'rock' && computerSelection === 'rock') {
-        return 'Both players selected rock, draw!'
-    } else if (playerSelection === 'paper' && computerSelection === 'paper') {
-        return 'Both players selected paper, draw!'
-    } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-        return 'Both players selected scissors, draw!'
+    if (playerInput === getComputedChoice) {
+        console.log(`Both players selected ${playerSelection}, draw!`);
     }
     // Player inputs paper
-    if (playerSelection === 'paper' && computerSelection === 'rock') {
-        return 'Paper beats rock, player wins!'
-    } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        return 'Scissors beats paper, computer wins!'
+    if (playerInput === 'paper' && getComputedChoice === 'rock') {
+        userWinCount++;
+        console.log('Paper beats rock, player wins!');
+    } else if (playerInput === 'paper' && getComputedChoice === 'scissors') {
+        computerWinCount++;
+        console.log('Scissors beats paper, computer wins!');
     }
     // Player inputs scissors
-    if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        return 'Scissors beats paper, player wins!'
-    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        return 'Rock beats scissors, computer wins!'
+    if (playerInput === 'scissors' && getComputedChoice === 'paper') {
+        userWinCount++;
+        console.log('Scissors beats paper, player wins!');
+    } else if (playerInput === 'scissors' && getComputedChoice === 'rock') {
+        computerWinCount++;
+        console.log('Rock beats scissors, computer wins!');
     }
     // Player inputs rock
-    if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return 'Paper beats rock, computer wins!'
-    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        return 'Rock beats scissors, player wins!'
+    if (playerInput === 'rock' && getComputedChoice === 'paper') {
+        computerWinCount++;
+        console.log('Paper beats rock, computer wins!');
+    } else if (playerInput === 'rock' && getComputedChoice === 'scissors') {
+        userWinCount++;
+        console.log('Rock beats scissors, player wins!');
     }
 }
 
-const playerSelection = prompt();
-const playerSelectionFixer = playerSelection.toLowerCase();
-const computerSelection = getComputedChoice();
-console.log(playRound(playerSelectionFixer, computerSelection))
-
 function playGame() {
     for (let i = 0; i < 5; i++) {
-        playRound(prompt(), computerSelection)
+        playRound(inputValidator(), getComputedChoice())
     }
-} playGame();
+};
+
+function winTest() {
+    if (userWinCount > computerWinCount) {
+        drawIdentify = false;
+        console.log(`Player wins with ${userWinCount} to ${computerWinCount}`);
+    } else if (computerWinCount > userWinCount) {
+        drawIdentify = false;
+        console.log(`Computer wins with ${computerWinCount} to ${userWinCount}`);
+    } else {
+        drawIdentify = true;
+        while (drawIdentify === true) {
+            console.log(`It's a draw! ${userWinCount} to ${computerWinCount}`);
+            console.log('Retrying...');
+            playGame();
+            drawIdentify = false;
+        }
+        console.log(`After the long and tedious battle the final score is: Player with ${userWinCount} and Computer with ${computerWinCount} ...`);
+        userWinCount > computerWinCount ? console.log('Player wins!') : console.log('Computer wins!');
+    }
+}
+
+playGame();
+winTest();
+
