@@ -90,7 +90,7 @@ if (inputValidator(playerSelection) === true) {
     setTimeout(() => {
         playGame();
         winTest();
-    }, 2000);
+    }, 500);
 } else {
     console.log('Please input rock, paper or scissors, refresh the page!');
 }
