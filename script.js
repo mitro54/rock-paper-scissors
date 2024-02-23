@@ -40,6 +40,12 @@ function playRound(playerSelection, computerSelection) {
 }
 
 const playerSelection = prompt();
-const playerSelectionFixer = playerSelection.toLowerCase()
+const playerSelectionFixer = playerSelection.toLowerCase();
 const computerSelection = getComputedChoice();
 console.log(playRound(playerSelectionFixer, computerSelection))
+
+function playGame() {
+    for (let i = 0; i < 5; i++) {
+        playRound(prompt(), computerSelection)
+    }
+} playGame();
