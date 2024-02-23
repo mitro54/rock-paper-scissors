@@ -1,6 +1,11 @@
+// Wincounts to keep track of score
 let userWinCount = 0;
 let computerWinCount = 0;
+
+// Identifies if a set of games end up in a draw
 let drawIdentify = false;
+
+// User input, corrects it to lowercase
 let playerPrompt = prompt();
 let playerSelection = playerPrompt.toLowerCase();
 
@@ -16,6 +21,7 @@ function getComputedChoice() {
     }
 };
 
+// The logic behind the game, plays one round
 function playRound(playerSelection, getComputedChoice) {
     // Draws
     if (playerSelection === getComputedChoice) {
@@ -46,13 +52,13 @@ function playRound(playerSelection, getComputedChoice) {
         console.log('Rock beats scissors, player wins!');
     }
 }
-
+// Plays a set of games
 function playGame() {
     for (let i = 0; i < 5; i++) {
         playRound(playerSelection, getComputedChoice())
     }
 };
-
+// Tests if there is a clear winner or not, if not, it will replay playGame()
 function winTest() {
     if (userWinCount > computerWinCount) {
         drawIdentify = false;
@@ -73,6 +79,7 @@ function winTest() {
         //   userWinCount > computerWinCount ? console.log('Player wins!') : console.log('Computer wins!');
     }
 };
+// Validates user input to be only rock, paper or scissors.
 function inputValidator(playerSelection) {
     switch (playerSelection) {
         case 'rock':
@@ -86,6 +93,9 @@ function inputValidator(playerSelection) {
     }
 };
 
+// Tests if the user input is truthy, if yes, it sets timeout of 500
+// milliseconds to play set of games and test for winner. 
+// Otherwise will inform the player to refresh the page and to use correct inputs.
 if (inputValidator(playerSelection) === true) {
     setTimeout(() => {
         playGame();
